@@ -47,7 +47,7 @@ class _Slide extends StatelessWidget {
   final Movie movie;
   const _Slide({required this.movie});
 
-  @override
+   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Container(
@@ -55,25 +55,30 @@ class _Slide extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           //*Imagen
           SizedBox(
             width: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                movie.posterPath,
-                fit: BoxFit.cover,
-                width: 150,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null) {
-                    return const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                            child: CircularProgressIndicator(strokeWidth: 2)));
-                  }
-                  return FadeIn(child: child);
-                },
+              child: AspectRatio(
+                aspectRatio: 2 / 3, // Relación de aspecto común para las imágenes
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: Image.network(
+                    movie.posterPath,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        );
+                      }
+                      return FadeIn(child: child);
+                    },
+                  ),
+                ),
               ),
             ),
           ),
