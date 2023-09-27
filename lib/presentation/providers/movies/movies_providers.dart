@@ -11,6 +11,15 @@ final nowPlayingMoviesProvider =
           fetchMoreMovies); // Crea una instancia de MoviesNotifier y la proporciona como valor inicial para el provider.
 });
 
+final popularMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+ 
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getPupular;
+  return MoviesNotifier(
+      fetchMoreMovies:
+          fetchMoreMovies); // Crea una instancia de MoviesNotifier y la proporciona como valor inicial para el provider.
+});
+
 typedef MovieCallBack = Future<List<Movie>> Function({int page});
 
 class MoviesNotifier extends StateNotifier<List<Movie>> {
