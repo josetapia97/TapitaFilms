@@ -19,7 +19,11 @@ class MoviedbDatasource extends MoviesDatasource {
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
     // Implementación del método de la interfaz MoviesDatasource para obtener las películas que están en cartelera en este momento.
 
-    final response = await dio.get('/movie/now_playing'); // Realiza una solicitud GET a la API de TMDb para obtener las películas que están en cartelera.
+    final response = await dio.get('/movie/now_playing',
+      queryParameters: {
+        'page': page
+      }
+    ); // Realiza una solicitud GET a la API de TMDb para obtener las películas que están en cartelera.
     final movieDbResponse = MovieDbResponse.fromJson(response.data); // Convierte la respuesta JSON en un objeto MovieDbResponse.
     final List<Movie> movies = movieDbResponse.results
       .where((moviedb) => moviedb.posterPath != 'no-poster')
