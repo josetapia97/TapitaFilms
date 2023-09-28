@@ -13,8 +13,23 @@ final nowPlayingMoviesProvider =
 
 final popularMoviesProvider =
     StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
- 
   final fetchMoreMovies = ref.watch(movieRepositoryProvider).getPupular;
+  return MoviesNotifier(
+      fetchMoreMovies:
+          fetchMoreMovies); // Crea una instancia de MoviesNotifier y la proporciona como valor inicial para el provider.
+});
+
+final upcomingMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getUpcoming;
+  return MoviesNotifier(
+      fetchMoreMovies:
+          fetchMoreMovies); // Crea una instancia de MoviesNotifier y la proporciona como valor inicial para el provider.
+});
+
+final topRatedMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getTopRated;
   return MoviesNotifier(
       fetchMoreMovies:
           fetchMoreMovies); // Crea una instancia de MoviesNotifier y la proporciona como valor inicial para el provider.
