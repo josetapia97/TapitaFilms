@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tapitafilms/domain/entities/movie.dart';
 import 'package:tapitafilms/presentation/providers/movies/movie_info_provider.dart';
+import 'package:tapitafilms/presentation/providers/providers.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-id';
@@ -17,6 +18,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
+    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override

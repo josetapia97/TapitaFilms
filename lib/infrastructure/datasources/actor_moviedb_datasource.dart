@@ -15,24 +15,18 @@ final dio = Dio(BaseOptions(
           'es-MX' // Configura el idioma de las respuestas de la API a español mexicano.
     }));
 
-List<Actor> _jsonToActors(Map<String, dynamic> json) {
-  final actorMDbResponse = CreditsResponse.fromJson(
-      json); // Convierte la respuesta JSON en un objeto MovieDbResponse.
-  final List<Actor> actores = actorMDbResponse.cast
-      .map((actors) => ActorMapper.castToEntity(
-              actors) // Mapea cada objeto MovieMovieDB a un objeto Movie utilizando el método movieDbToEntity de MovieMapper.
-          )
-      .toList();
-
-  return actores; // Devuelve la lista de películas mapeadas.
-}
 
 class ActorMovieDbDatasource extends ActorsDatasource {
   @override
   Future<List<Actor>> getactorsByMovie(String movieId) async {
-    final response = await dio.get('movie/$movieId/credits');
+    final response = await dio.get('/movie/$movieId/credits');
 
-     return _jsonToActors(response.data);
+    final castResponse = CreditsResponse.fromJson(response.data);
 
+    List<Actor> actors = castResponse.cast
+        .map((cast) => ActorMapper.castToEntity(cast))
+        .toList();
+
+    return actors;
   }
 }
