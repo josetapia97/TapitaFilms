@@ -5,6 +5,8 @@ import 'package:tapitafilms/domain/entities/actor.dart';
 import 'package:tapitafilms/infrastructure/mappers/actor_maper.dart';
 import 'package:tapitafilms/infrastructure/models/moviedb/credits_response.dart';
 
+class ActorMovieDbDatasource extends ActorsDatasource {
+
 final dio = Dio(BaseOptions(
     baseUrl:
         'https://api.themoviedb.org/3', // Configura la URL base para las solicitudes a la API de TMDb.
@@ -16,7 +18,6 @@ final dio = Dio(BaseOptions(
     }));
 
 
-class ActorMovieDbDatasource extends ActorsDatasource {
   @override
   Future<List<Actor>> getactorsByMovie(String movieId) async {
     final response = await dio.get('/movie/$movieId/credits');
