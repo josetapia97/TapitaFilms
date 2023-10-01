@@ -30,8 +30,7 @@ class MovieMapper {
               '') // Comprueba si posterPath no está vacío.
           ? 'https://image.tmdb.org/t/p/w500${moviedb.posterPath}' // Si no está vacío, construye una URL completa para la imagen del póster utilizando la URL base y posterPath de moviedb.
           : 'no-poster', // Si está vacío, utiliza una URL de imagen de respaldo.
-      releaseDate: moviedb
-          .releaseDate, // Mapea releaseDate de moviedb a releaseDate de Movie.
+      releaseDate: moviedb.releaseDate != null ? moviedb.releaseDate! : DateTime.now() , // Mapea releaseDate de moviedb a releaseDate de Movie.
       title: moviedb.title, // Mapea title de moviedb a title de Movie.
       video: moviedb.video, // Mapea video de moviedb a video de Movie.
       voteAverage: moviedb
