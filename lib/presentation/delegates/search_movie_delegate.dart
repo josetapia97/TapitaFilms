@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:tapitafilms/config/helpers/human_formats.dart';
@@ -7,8 +9,26 @@ typedef SearchMovieCallback = Future<List<Movie>> Function(String query);
 
 class SearchMovieDelegate extends SearchDelegate<Movie?> {
   final SearchMovieCallback searchMovies;
+  StreamController<List<Movie>> debouncedMovies = StreamController.broadcast();
+  Timer? _debouncedTimer;
 
   SearchMovieDelegate({required this.searchMovies});
+  void clearStreams() {
+    debouncedMovies.close();
+  }
+
+  void _onQueryChanged(String query) {
+    if (_debouncedTimer?.isActive ?? false) _debouncedTimer!.cancel();
+
+    _debouncedTimer = Timer(const Duration(milliseconds: 500), () async {
+      if (query.isEmpty) {
+        debouncedMovies.add([]);
+        return;
+      }
+      final movies = await searchMovies(query);
+      debouncedMovies.add(movies);
+    });
+  }
 
   @override
   String get searchFieldLabel => 'Buscar película';
@@ -28,7 +48,10 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-        onPressed: () => close(context, null),
+        onPressed: () {
+          clearStreams();
+          close(context, null);
+        },
         icon: const Icon(Icons.arrow_back_ios_new_rounded));
   }
 
@@ -39,16 +62,24 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
-      future: searchMovies(query),
-      initialData: const [],
+    _onQueryChanged(query);
+    return StreamBuilder(
+      //future: searchMovies(query),
+      stream: debouncedMovies.stream,
       builder: (context, snapshot) {
+        //todo: esperar para peticion
         final movies = snapshot.data ?? [];
 
         return ListView.builder(
           itemCount: movies.length,
           itemBuilder: (context, index) {
-            return _MovieItem(movie: movies[index],onMovieSelected: close,);
+            return _MovieItem(
+              movie: movies[index],
+              onMovieSelected: (context,movie) {
+                clearStreams();
+                close(context, movie);
+              },
+            );
           },
         );
       },
@@ -67,7 +98,7 @@ class _MovieItem extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        onMovieSelected(context,movie);
+        onMovieSelected(context, movie);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
