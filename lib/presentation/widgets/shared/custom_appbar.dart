@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tapitafilms/domain/entities/movie.dart';
 import 'package:tapitafilms/presentation/delegates/search_movie_delegate.dart';
 import 'package:tapitafilms/presentation/providers/movies/movies_repository_provider.dart';
 
@@ -29,14 +31,16 @@ class CustomAppbar extends ConsumerWidget {
               const Spacer(),
               IconButton(
                   onPressed: () {
+                    final movieRepository = ref.read(movieRepositoryProvider);
 
-                    final movieRepository=  ref.read(movieRepositoryProvider);
-
-                    showSearch(
-                      context: context,
-                      delegate: SearchMovieDelegate(searchMovies: movieRepository.searchMovies
-                      )
-                    );
+                    showSearch<Movie?>(
+                        context: context,
+                        delegate: SearchMovieDelegate(
+                            searchMovies: movieRepository.searchMovies))
+                      .then((movie) {
+                          if (movie == null) return;
+                          context.push('/movie/${movie.id}');
+                        });
                   },
                   icon: const Icon(Icons.search))
             ]),
