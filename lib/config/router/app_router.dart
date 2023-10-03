@@ -1,11 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:tapitafilms/presentation/screens/screens.dart';
+import 'package:tapitafilms/presentation/views/views.dart';
 
 final appRouter = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/',
     name: HomeScreen.name,
-    builder: (context, state) => const HomeScreen(),
+    builder: (context, state) => const HomeScreen(childView: HomeView()),
     routes: [
        GoRoute(
          path: 'movie/:id',
