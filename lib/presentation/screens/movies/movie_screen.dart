@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
-
 import 'package:tapitafilms/domain/entities/movie.dart';
 import 'package:tapitafilms/presentation/providers/providers.dart';
 import 'package:tapitafilms/presentation/providers/movies/movie_info_provider.dart';
@@ -182,13 +181,13 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-class _CustomSliverAppBar extends StatelessWidget {
+class _CustomSliverAppBar extends ConsumerWidget {
   final Movie movie;
 
   const _CustomSliverAppBar({required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -197,7 +196,11 @@ class _CustomSliverAppBar extends StatelessWidget {
       foregroundColor: Colors.white,
       actions: [
         IconButton(
-          onPressed: () {},
+          //? agregar peliculas a fav
+          onPressed: () {
+            ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
+
+          },
           icon: const Icon(Icons.favorite_border_rounded),
           //icon:const Icon(Icons.favorite_rounded,color: Colors.red,)
         )
@@ -222,30 +225,21 @@ class _CustomSliverAppBar extends StatelessWidget {
               ),
             ),
             const _CustomGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colores: [Colors.transparent,Colors.black54],
-              stops: [0.8, 1.0]),
-            
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colores: [Colors.transparent, Colors.black54],
+                stops: [0.8, 1.0]),
             const _CustomGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.center,
-              colores: [Colors.black87,Colors.transparent],
-              stops: [
-                0.0,
-                0.3
-              ]),
-
+                begin: Alignment.topLeft,
+                end: Alignment.center,
+                colores: [Colors.black87, Colors.transparent],
+                stops: [0.0, 0.3]),
             const _CustomGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colores: [Colors.black87,Colors.transparent],
-              stops: [
-                    0.0,
-                    0.2
-                  ],),
-
-            
+              colores: [Colors.black87, Colors.transparent],
+              stops: [0.0, 0.2],
+            ),
           ],
         ),
       ),
@@ -270,10 +264,7 @@ class _CustomGradient extends StatelessWidget {
       child: DecoratedBox(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  begin: begin,
-                  end: end,
-                  stops: stops,
-                  colors: colores))),
+                  begin: begin, end: end, stops: stops, colors: colores))),
     );
   }
 }
