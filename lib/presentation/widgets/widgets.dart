@@ -3,3 +3,5 @@ export 'shared/custom_appbar.dart';
 export 'movies/movies_slideshow.dart';
 export 'shared/custom_bottomnavbar.dart';
 export 'shared/full_screen_loader.dart';
+export 'movies/movie_poster_link.dart';
+export 'movies/movie_masonry.dart';
