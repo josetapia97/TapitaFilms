@@ -17,11 +17,11 @@ Adéntrate en el emocionante mundo del cine con la pantalla de detalles de pelí
 
 ## Búsqueda Inteligente 🧐
 
-Nuestra potente función de búsqueda te permite encontrar fácilmente las películas que amas. Con tecnologías avanzadas, hacemos que la búsqueda sea rápida y precisa.
+Mi potente función de búsqueda te permite encontrar fácilmente las películas que amas. Con tecnologías avanzadas, hacemos que la búsqueda sea rápida y precisa.
 
 ## Experiencia de Navegación 🗺️
 
-Nuestra navegación intuitiva te permite explorar el mundo del cine con facilidad. Desde categorías emocionantes hasta búsquedas rápidas, lo tenemos todo cubierto.
+Con esta navegación intuitiva, te permite explorar el mundo del cine con facilidad. Desde categorías emocionantes hasta búsquedas rápidas, lo tenemos todo cubierto.
 
 ## Disfruta de Tapita Films 🎉
 
@@ -29,7 +29,7 @@ Nuestra navegación intuitiva te permite explorar el mundo del cine con facilida
 
 ## Contáctanos 📧
 
-¿Preguntas o sugerencias? ¡Estamos aquí para escucharte! Ponte en contacto con nosotros a través de nuestro [correo electrónico].
+¿Preguntas o sugerencias? ¡Estamos aquí para escucharte! Ponte en contacto conmigo.
 
 ¡Gracias por elegir Tapita Films y disfruta del emocionante mundo del cine en tus manos!
 
