@@ -7,9 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  runApp(
-    const ProviderScope(child: MainApp())
-  );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -17,10 +15,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.platformBrightnessOf(context);
+
+    final lightTheme = AppTheme().getLightTheme();
+    final darkTheme = AppTheme().getDarkTheme();
+    
     return MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme().getTheme(),
+      theme: brightness == Brightness.dark ? darkTheme : lightTheme,
     );
   }
 }
